@@ -1,3 +1,5 @@
+//=== ESTADO (dados da aplicação)===
+
 let likeCount = 0;
 let curtido = false; // flag booleana
 
@@ -6,6 +8,8 @@ let descurtido = false;
 
 // função de curtir
 function curtir() {
+
+// === SERVICE (regras de negócio)===
 
 if(curtido == false){
    likeCount++;
@@ -32,6 +36,16 @@ if(descurtido == false){
 document.getElementById("deslikeCount").innerText = deslikeCount;
 }
 
-// eventos dos botões
-document.getElementById("likeBtn").addEventListener("click", curtir);
-document.getElementById("deslikeBtn").addEventListener("click", descurtir);
+// === CONTROLER (intermediação)===
+
+function clicarCurtir(){
+   curtir();
+} 
+
+function clicarDescurtir(){
+   descurtir();
+}
+// === EVENTOS ===
+
+document.getElementById("likeBtn").addEventListener("click", clicarDescurtir);
+document.getElementById("deslikeBtn").addEventListener("click", clicarDescurtir);
