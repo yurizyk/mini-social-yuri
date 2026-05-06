@@ -1,51 +1,68 @@
-//=== ESTADO (dados da aplicação)===
+//=== ESTADO (dados da aplicação) === 
 
 let likeCount = 0;
-let curtido = false; // flag booleana
-
 let deslikeCount = 0;
+let curtido = false;
 let descurtido = false;
 
-// função de curtir
+//=== SERVICE (regras de negócio) === 
+
 function curtir() {
+  if (curtido == false){
+    likeCount++;
+    curtido = true;
 
-// === SERVICE (regras de negócio)===
+    if(descurtido == true){
+      dislikeCount--;
+      descurtido = false;
+    }
 
-if(curtido == false){
-   likeCount++;
-   curtido = true;
-} else{
-   likeCount--;
-   curtido = false;
+  }else{
+    likeCount--;
+    curtido = false;
+  }
+
 }
 
-document.getElementById("likeCount").innerText = likeCount;
+function descurtir() {
+  if(descurtido == false){
+    dislikeCount++;
+    descurtido = true;
+
+    if(curtido == true){
+      likeCount--;
+      curtido = false;
+    }
+
+  }
+  else{
+    dislikeCount--;
+    descurtido = false;
+  }
 }
 
-// função de descurtir
-function descurtir(){
-
-if(descurtido == false){
-   deslikeCount++;
-   descurtido = true;
-} else{
-   deslikeCount--;
-   descurtido = false;
+// === VIEW (interface/renderização)===
+function atualizarTela(){
+  document.getElementById("likeCount").innerText = likeCount;
+  document.getElementById("deslikeCount").innerText = dislikeCount;
 }
 
-document.getElementById("deslikeCount").innerText = deslikeCount;
-}
-
-// === CONTROLER (intermediação)===
+//=== CONTROLLER (intermediação)===
 
 function clicarCurtir(){
-   curtir();
-} 
-
-function clicarDescurtir(){
-   descurtir();
+  curtir();
+  atualizarTela();
 }
+function clicarDescurtir(){
+  descurtir();
+  atualizarTela();
+}
+
 // === EVENTOS ===
 
-document.getElementById("likeBtn").addEventListener("click", clicarDescurtir);
+document.getElementById("likeBtn").addEventListener("click", clicarCurtir);
 document.getElementById("deslikeBtn").addEventListener("click", clicarDescurtir);
+
+// === INICIALIZAÇÃO ===  
+
+atualizarTela();
